@@ -20,6 +20,9 @@ const nextConfig: NextConfig = {
   images: { unoptimized: true },
   reactStrictMode: true,
   poweredByHeader: false,
+  // Static export writes each prefetch segment as its own file; bundled ("inlined") prefetch
+  // requests ask for file names that do not exist on GitHub Pages and log 404 errors.
+  experimental: { prefetchInlining: false },
 };
 
 export default nextConfig;

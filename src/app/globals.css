@@ -215,15 +215,7 @@ h1, h2, h3, h4 { margin: 0; line-height: 1.2; color: var(--navy); }
 .nav-links a, .nav-cta { white-space: nowrap; }
 /* Make room for the language + currency menus: the floating WhatsApp button stays visible */
 @media (max-width: 1320px) { .nav-cta { display: none; } .nav-links { gap: 24px; } }
-@media (max-width: 480px) {
-  .nav { gap: 8px; }
-  .nav-tools { gap: 6px; }
-  .brand { font-size: 18px; gap: 7px; }
-  .brand .logo { width: 30px; height: 30px; font-size: 13px; }
-  .lang-switch summary svg { display: none; }
-  .cur-switch select { max-width: 78px; padding: 8px 22px 8px 10px; background-position: right 8px center; font-size: 13px; }
-  .lang-switch summary { padding: 8px 10px; font-size: 13px; }
-}
+/* Phone header sizes are at the END of this file (they must come after the normal .brand / .nav rules) */
 .translation-note { padding: 12px 16px; border-radius: 10px; background: var(--bg-alt); color: var(--muted) !important; font-size: 14px; }
 .post-grid-item { display: flex; }
 .post-grid-item > .post-card { flex: 1; }
@@ -264,6 +256,7 @@ h1, h2, h3, h4 { margin: 0; line-height: 1.2; color: var(--navy); }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 22px; color: var(--navy); }
 .brand b { color: var(--blue); font-weight: 800; }
 .brand-light { color: #fff; }
+.brand-light b { color: #6fa0ff; } /* lighter blue: readable on the dark footer */
 .logo { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--blue), #4f8bff); color: #fff; font-size: 15px; }
 .nav-links { display: flex; gap: 32px; font-weight: 500; font-size: 15px; }
 .nav-links a:hover { color: var(--blue); }
@@ -291,18 +284,18 @@ h1, h2, h3, h4 { margin: 0; line-height: 1.2; color: var(--navy); }
 .tv-bar { position: relative; z-index: 1; display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; }
 .live { padding: 2px 10px; border-radius: 6px; background: #e8323c; }
 .tv-main { position: absolute; z-index: 1; left: 18px; bottom: 52px; padding: 10px 14px; border-radius: 10px; background: rgba(5, 11, 28, .75); }
-.tv-main small { display: block; color: #8fb1ff; font-size: 11px; letter-spacing: .08em; }
+.tv-main small { display: block; color: #8fb1ff; font-size: 12px; letter-spacing: .08em; }
 .tv-main strong { display: block; font-size: clamp(15px, 2vw, 20px); }
 .tv-main b { color: var(--accent-bright); }
 .tv-main span { color: #aab4d4; font-size: 12px; }
 .tv-guide { position: absolute; z-index: 1; left: 18px; right: 18px; bottom: 14px; display: flex; gap: 8px; }
-.tv-guide span { padding: 3px 12px; border-radius: 999px; background: rgba(255, 255, 255, .12); font-size: 11px; }
+.tv-guide span { padding: 3px 12px; border-radius: 999px; background: rgba(255, 255, 255, .12); font-size: 12px; }
 .tv-guide .on { background: var(--blue); }
 .tv-stand { width: 30%; height: 18px; margin: 0 auto; background: linear-gradient(#050b1c, #1a2748); clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%); }
 .float-card { position: absolute; padding: 10px 16px; border-radius: 12px; background: #fff; color: var(--navy); box-shadow: 0 15px 30px rgba(0, 0, 0, .25); font-size: 14px; animation: float 4s ease-in-out infinite; }
 .float-card b { color: var(--blue); font-size: 18px; }
 .fc-1 { top: -18px; right: -10px; }
-.fc-2 { bottom: 40px; left: -20px; animation-delay: 1.5s; }
+.fc-2 { bottom: -4px; left: -20px; animation-delay: 1.5s; } /* below the screen, so it never covers the channel buttons */
 @keyframes float { 50% { transform: translateY(-8px); } }
 
 /* Stats */
@@ -352,7 +345,7 @@ h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01
 .center-text { text-align: center; }
 .center-text p { margin-inline: auto; }
 .pricing-plans { padding-top: 70px; }
-.mini-badge { margin-left: 10px; padding: 2px 8px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; }
+.mini-badge { margin-left: 10px; padding: 2px 8px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; }
 .plan { position: relative; display: flex; flex-direction: column; padding: 30px 22px; border-radius: var(--radius); background: #fff; color: var(--text); }
 .plan-featured { outline: 3px solid var(--accent); transform: scale(1.04); }
 .badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); padding: 4px 14px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; white-space: nowrap; }
@@ -421,14 +414,16 @@ h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01
 @media (max-width: 1100px) {
   .plan-grid { grid-template-columns: repeat(2, 1fr); row-gap: 30px; }
   .plan-featured { transform: none; }
-}
-@media (max-width: 900px) {
+  /* Tablets: long menu words (French, Finnish, German…) no longer fit → use the ☰ menu */
   .nav-links, .nav-cta { display: none; }
   .mobile-menu { display: block; }
+}
+@media (max-width: 900px) {
   .hero-inner, .devices, .faq { grid-template-columns: 1fr; }
   .hero-inner { padding: 60px 0 80px; gap: 60px; }
   .feature-grid, .review-grid, .post-grid { grid-template-columns: 1fr 1fr; }
-  .article-layout, .server-block { grid-template-columns: 1fr; }
+  .article-layout, .server-block { grid-template-columns: minmax(0, 1fr); } /* minmax(0,…) lets wide tables/pictures shrink instead of widening the page */
+  .article-layout > *, .server-block > * { min-width: 0; }
   .try-free { flex-direction: column; align-items: flex-start; padding: 24px; }
   .try-free-actions { width: 100%; }
   .server-block { padding: 24px; }
@@ -447,4 +442,23 @@ h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01
   .trial-form { padding: 24px; }
   .fc-1 { right: 0; } .fc-2 { left: 0; }
   .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* ---- Phones: compact header (must stay at the END of the file) ---- */
+@media (max-width: 480px) {
+  .nav { gap: 8px; }
+  .nav-tools { gap: 4px; }
+  .header .brand { font-size: 16px; gap: 6px; }
+  .header .brand .logo { width: 28px; height: 28px; border-radius: 8px; font-size: 12px; }
+  .lang-switch summary { padding: 7px 9px; font-size: 13px; }
+  .lang-switch summary svg { display: none; }
+  .cur-switch select { max-width: 74px; padding: 7px 20px 7px 9px; background-position: right 7px center; font-size: 13px; }
+  .mobile-menu summary { padding: 2px 4px; font-size: 24px; }
+  .mobile-menu div { right: -4px; min-width: min(240px, calc(100vw - 28px)); }
+  .lang-switch ul { right: -60px; }
+  .float-card { font-size: 12px; padding: 8px 12px; }
+  .float-card b { font-size: 15px; }
+}
+@media (max-width: 400px) {
+  .shell { width: calc(100% - 28px); } /* 14px side margins on small phones */
 }
