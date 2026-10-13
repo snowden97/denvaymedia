@@ -1,0 +1,47 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # Sub-folder of the site: https://snowden97.github.io/denvaymedia/
+      # When denvaystream.com is connected, change this line to:  BASE_PATH: ""
+      BASE_PATH: /denvaymedia
+    steps:
+      - uses: actions/checkout@v4
+      # The website files are uploaded as one zip (site.zip) — unpack it before building
+      - name: Unpack site.zip
+        run: |
+          if [ -f site.zip ]; then unzip -o -q site.zip; fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

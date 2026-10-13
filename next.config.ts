@@ -1,39 +1,25 @@
 import type { NextConfig } from "next";
 
-const isProd = process.env.NODE_ENV === "production";
-
-// Content Security Policy: only load scripts, styles, fonts and images from this site.
-// 'unsafe-inline' is required for Next.js's inline bootstrap scripts and styles.
-// Only applied in production — the dev server needs eval() and websockets for hot reload.
-const csp = [
-  "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
-  "font-src 'self'",
-  "connect-src 'self'",
-  "object-src 'none'",
-  "base-uri 'self'",
-  "form-action 'self'",
-  "frame-ancestors 'none'",
-].join("; ");
-
-const securityHeaders = [
-  { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
-  { key: "X-Content-Type-Options", value: "nosniff" },
-  { key: "X-Frame-Options", value: "DENY" },
-  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()" },
-  { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
-  ...(isProd ? [{ key: "Content-Security-Policy", value: csp }] : []),
-];
+/**
+ * Static website for GitHub Pages: `npm run build` writes ready-made files to the /out folder.
+ *
+ * BASE_PATH = the sub-folder the site lives in:
+ *   - "/denvaymedia" while it is served at https://snowden97.github.io/denvaymedia/
+ *   - "" (empty) once your own domain (denvaystream.com) is connected
+ * It is set in .github/workflows/deploy.yml — change it there, not here.
+ *
+ * (GitHub Pages cannot send custom security headers, so none are configured here.)
+ */
+const basePath = (process.env.BASE_PATH ?? "").replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
+  output: "export",
+  trailingSlash: true, // /fr/pricing/ → /fr/pricing/index.html
+  basePath,
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
+  images: { unoptimized: true },
   reactStrictMode: true,
   poweredByHeader: false,
-  async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
-  },
 };
 
 export default nextConfig;
