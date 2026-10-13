@@ -1,0 +1,25 @@
+# dependencies (reinstalled automatically)
+/node_modules
+
+# build output (rebuilt automatically)
+/.next/
+/out/
+/build
+
+# logs and system files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+
+# local environment files (may contain secrets)
+.env*.local
+.env
+
+# hosting
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
